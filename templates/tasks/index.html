@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Task Reminder</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="task-form">
+        <h2>Add New Task</h2>
+        <form action="{{ url_for('main.add_task') }}" method="POST">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="3"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="due_date">Due Date:</label>
+                <input type="datetime-local" id="due_date" name="due_date" required>
+            </div>
+            
+            <button type="submit">Add Task</button>
+        </form>
+    </div>
+
+    <h2>Tasks</h2>
+    <ul class="task-list">
+        {% for task in tasks %}
+        <li class="task-item {% if task[4] %}completed{% endif %}">
+            <div class="task-info">
+                <h3>{{ task[1] }}</h3>
+                <p>{{ task[2] }}</p>
+                <p><strong>Due Date:</strong> {{ task[3] }}</p>
+            </div>
+            <div class="task-actions">
+                {% if not task[4] %}
+                <a href="{{ url_for('main.complete_task', task_id=task[0]) }}">
+                    <button class="complete-btn">Complete</button>
+                </a>
+                {% endif %}
+                <a href="{{ url_for('main.delete_task', task_id=task[0]) }}">
+                    <button class="delete-btn">Delete</button>
+                </a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %} 

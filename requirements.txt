@@ -1,0 +1,4 @@
+Flask
+Werkzeug
+flask-mail
+python-dotenv
