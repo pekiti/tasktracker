@@ -1,7 +1,8 @@
 # Task Reminder
 
 A simple web-based task reminder application built with Flask that sends email notifications for due tasks.
-Code and documentation was solely generated/written by cursor :)
+
+**Code and documentation was solely generated/written by cursor :)**
 
 ## Features
 
